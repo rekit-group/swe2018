@@ -8,13 +8,9 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import rekit.config.GameConf;
 import rekit.logic.GameModel;
 import rekit.logic.ILevelScene;
-import rekit.logic.filters.Filter;
-import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.GameElementFactory;
 import rekit.logic.level.LevelFactory;
 import rekit.logic.scene.LevelScene;
 import rekit.mymod.enemies.Pizza;
-import rekit.mymod.filter.LightFilter;
 import rekit.mymod.inanimates.FlyingText;
 import rekit.persistence.level.LevelDefinition;
 import rekit.persistence.level.LevelType;
@@ -55,14 +51,15 @@ public final class MyModScene extends LevelScene {
 	@Override
 	  public void init() {
 	    super.init();
-	    this.setAttackHandler(() -> this.addGameElement(new FlyingText(this.getPlayer().getPos().addY(-1.5F), "Attack")));
+	    // Change this to add a custom handler when the player attacks (space key)
+	    this.setAttackHandler((a) -> this.addGameElement(new FlyingText(this.getPlayer().getPos().addY(-1.5F), "Attack")));
 	  }
 
 	@Override
 	public void start() {
 		super.start();
 				
-		// Adding a GameElement to the scene can be done in several ways:
+		// Adding a GameElement to the scene can be done in two ways:
 		// 1)	Here in this scene, using the constructor
 		//		For develop and debug.
 		//		Can be helpful when GameElements need references to other GameElements
