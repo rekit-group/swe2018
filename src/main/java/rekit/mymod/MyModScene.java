@@ -11,6 +11,7 @@ import rekit.logic.ILevelScene;
 import rekit.logic.level.LevelFactory;
 import rekit.logic.scene.LevelScene;
 import rekit.mymod.enemies.Pizza;
+import rekit.mymod.enemies.SpriteDummy;
 import rekit.mymod.inanimates.FlyingText;
 import rekit.persistence.level.LevelDefinition;
 import rekit.persistence.level.LevelType;
@@ -75,10 +76,14 @@ public final class MyModScene extends LevelScene {
 		
 		// Uncomment this to add a global color filter
 		// this.getModel().setFilter(Filter.get(LightFilter.class));
+				
 		
 		this.addGameElement(new FlyingText(new Vec(12, 2), "This is\nthe Pizza added\nin MyModScene"));
 		
-		this.addGameElement(new FlyingText(new Vec(37, 2), "Enjoy the rest of\nthe level and then\nget started ;)"));
+		this.addGameElement(new FlyingText(new Vec(36, 2), "SpriteDummy shows how\nto render Sprites"));
+		this.addGameElement(new SpriteDummy(new Vec(36, 5)));
+		
+		this.addGameElement(new FlyingText(new Vec(48, 2), "Enjoy the rest of\nthe level and then\nget started ;)"));
 	}
 	
 	
