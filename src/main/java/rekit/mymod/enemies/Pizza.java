@@ -75,9 +75,9 @@ public final class Pizza extends Enemy {
 
 			// SALAMI
 			f.drawCircle(this.getPos().add(pos), Pizza.SIZE_SALAMI, Pizza.COLOR_SALAMI);
-
 		}
 
+		// f.drawImage(pos, size, imagePath, ingame, usefilter, mirrorX, mirrorY);
 		// f.drawCircle(pos, size, color);
 		// f.drawRectangle(pos, size, color);
 		// f.drawRoundRectangle(pos, size, color, arcWidth, arcHeight);
