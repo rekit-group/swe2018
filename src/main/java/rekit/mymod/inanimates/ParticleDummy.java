@@ -55,7 +55,7 @@ public class ParticleDummy extends DynamicInanimate {
 	
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		super.reactToCollision(element, dir);
+		// not not call super.reactToCollision(element, dir);
 	}
 	
 	
