@@ -20,9 +20,6 @@ import rekit.util.LambdaUtil;
 
 /**
  * A test scene which can be used in {@link GameConf#DEBUG} context.
- *
- * @author Matthias Schmitt
- *
  */
 public final class MyModScene extends LevelScene {
 
