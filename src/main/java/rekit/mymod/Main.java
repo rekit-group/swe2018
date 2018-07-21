@@ -38,7 +38,7 @@ public final class Main {
 	 *            not used
 	 */
 	public static void main(String[] args) {
-		GameConf.DEBUG = true;
+		GameConf.DEBUG = false;
 		Thread.currentThread().setName("Startup");
 		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.FATAL);
 		GameConf.GAME_LOGGER.debug(ModManager.SYSLOADER.getClass().getSimpleName() + " (Sysloader loaded.)");

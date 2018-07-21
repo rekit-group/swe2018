@@ -2,10 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.fuchss</groupId>
-	<artifactId>rekit-sample-mod</artifactId>
+	<groupId>rekit</groupId>
+	<artifactId>swe-2018</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>A sample mod for RεKiT</name>
+	<name>SWE Bonus Tutorial 2018</name>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
@@ -14,6 +14,7 @@
 		<maven.compiler.source>9</maven.compiler.source>
 		<maven.compiler.target>9</maven.compiler.target>
 		<rekit.version>1.2.1</rekit.version>
+		<main.class>rekit.mymod.Main</main.class>
 	</properties>
 	<repositories>
 		<repository>
@@ -66,9 +67,32 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>rekit.mymod.Main</mainClass>
+							<mainClass>${main.class}</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<executions>
+						<execution>
+							<id>make-assembly</id>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						</execution>
+					</executions>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>${main.class}</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
