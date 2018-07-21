@@ -1,8 +1,8 @@
-package rekit.mymod.inanimates.states;
+package rekit.mymod.inanimates.fallbox.states;
 
 import rekit.logic.gameelements.GameElement;
-import rekit.mymod.inanimates.FallBox;
-import rekit.mymod.inanimates.FallBoxState;
+import rekit.mymod.inanimates.fallbox.FallBox;
+import rekit.mymod.inanimates.fallbox.FallBoxState;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;

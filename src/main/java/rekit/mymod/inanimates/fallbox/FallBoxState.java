@@ -1,4 +1,4 @@
-package rekit.mymod.inanimates;
+package rekit.mymod.inanimates.fallbox;
 
 import rekit.logic.gameelements.GameElement;
 import rekit.primitives.geometry.Direction;

@@ -1,6 +1,7 @@
 package rekit.mymod;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -10,10 +11,12 @@ import rekit.logic.GameModel;
 import rekit.logic.ILevelScene;
 import rekit.logic.level.LevelFactory;
 import rekit.logic.scene.LevelScene;
-import rekit.mymod.enemies.Pizza;
-import rekit.mymod.enemies.SpriteDummy;
 import rekit.mymod.inanimates.FlyingText;
-import rekit.mymod.inanimates.ParticleDummy;
+import rekit.mymod.quiz.Answer;
+import rekit.mymod.quiz.AnswerBox;
+import rekit.mymod.quiz.BlockadeBox;
+import rekit.mymod.quiz.Question;
+import rekit.mymod.quiz.questgenerator.MathQuestGenerator;
 import rekit.persistence.level.LevelDefinition;
 import rekit.persistence.level.LevelType;
 import rekit.primitives.geometry.Vec;
@@ -30,7 +33,7 @@ public final class MyModScene extends LevelScene {
 
 	private static LevelDefinition getTestLevel() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
-		Resource res = resolv.getResource("/conf/mymod.dat");
+		Resource res = resolv.getResource("/conf/quiz.dat");
 		return new LevelDefinition(res.getInputStream(), LevelType.Test);
 	}
 
@@ -48,43 +51,61 @@ public final class MyModScene extends LevelScene {
 	}
 
 	@Override
-	  public void init() {
+	public void init() {
 	    super.init();
-	    // Change this to add a custom handler when the player attacks (space key)
-	    this.setAttackHandler((a) -> this.addGameElement(new FlyingText(this.getPlayer().getPos().addY(-1.5F), "Attack")));
-	  }
+	    this.setOffsetWildCard(true);
+	    this.setCameraTarget(this.getPlayer());
+	}
 
 	@Override
 	public void start() {
 		super.start();
-				
-		// Adding a GameElement to the scene can be done in two ways:
-		// 1)	Here in this scene, using the constructor
-		//		For develop and debug.
-		//		Can be helpful when GameElements need references to other GameElements
-		Pizza pizza = new Pizza(new Vec(12, 4));
-		this.addGameElement(pizza);
+		screenOffsetInBlocks = 0;
+		MathQuestGenerator mqs = new MathQuestGenerator();
+
+		displayQuestion(mqs.kinderGartenQuest(100));
+		displayQuestion(mqs.kinderGartenQuest(1000));
+		displayQuestion(mqs.kinderGartenQuest(10000));
+		displayQuestion(mqs.binearToDezimalQuest());
+		displayQuestion(mqs.binearToDezimalQuest());
+		displayQuestion(mqs.binearToDezimalQuest());
+		displayQuestion(mqs.determinantQuest());
+		displayQuestion(mqs.determinantQuest());
+		displayQuestion(mqs.determinantQuest());
+	}
+	
+	private int screenOffsetInBlocks = 0;
+	private static final int SCREEN_WIDTH_IN_BLOCKS = 24;
+	private static final double ANSWER_Y_POSITION = 4.7;
+	private static final double ANSWER_BLOCK_Y_POSITION = 5;
+	private static final int SPACE_BETWEEN_ANSWERS = 3;
+	private static final int FIRST_ANSWER_POSITION = 8;
+	private static final double QUESTION_Y_POSITION = 2;
+	
+	public void displayQuestion(Question question) {
+		this.addGameElement(new FlyingText(new Vec(screenOffsetInBlocks + SCREEN_WIDTH_IN_BLOCKS / 2, QUESTION_Y_POSITION), question.getText()));
+
+		ArrayList<BlockadeBox> blockadeList = new ArrayList<BlockadeBox>();
 		
-		// 2)	Via the level generator
-		//		preferable, as you can design levels better this way.
-		// 		see the test level in resources/conf/mymod.dat
-		//		The level generator creates the GameElements like:
-		//		Pizza pizza = (Pizza) GameElementFactory.getPrototype("Pizza").create(new Vec(12, 4), String... options);
-		//		so make sure to parse any options in the create-methode, if required
+		//set blockadeheight
+		int blockadeheight = 8;
 		
-		// Uncomment this to add a global color filter
-		// this.getModel().setFilter(Filter.get(LightFilter.class));
-				
+		for (int i = 0; i < blockadeheight; i++) {
+			BlockadeBox blockade = new BlockadeBox(new Vec(screenOffsetInBlocks + SCREEN_WIDTH_IN_BLOCKS, 7 - i));
+			blockadeList.add(blockade);
+			this.addGameElement(blockade);
+		}
 		
-		this.addGameElement(new FlyingText(new Vec(12, 2), "This is\nthe Pizza added\nin MyModScene"));
+		int extraOffset = FIRST_ANSWER_POSITION;
 		
-		this.addGameElement(new FlyingText(new Vec(36, 2), "SpriteDummy shows how\nto render Sprites"));
-		this.addGameElement(new SpriteDummy(new Vec(36, 5)));
+		for (Answer answer : question.getShuffledAnswers()) {
+			int xPos = screenOffsetInBlocks + extraOffset;
+			this.addGameElement(new FlyingText(new Vec(xPos, ANSWER_Y_POSITION), answer.getText()));
+			this.addGameElement(new AnswerBox(new Vec(xPos, ANSWER_BLOCK_Y_POSITION), blockadeList, answer.isRight()));
+			extraOffset += SPACE_BETWEEN_ANSWERS;
+		}
 		
-		this.addGameElement(new FlyingText(new Vec(48, 2), "ParticleDummy shows how\nto use the\nParticleSpawner"));
-		this.addGameElement(new ParticleDummy(new Vec(48, 5)));
-		
-		this.addGameElement(new FlyingText(new Vec(58, 2), "Enjoy the rest of\nthe level and then\nget started ;)"));
+		screenOffsetInBlocks += SCREEN_WIDTH_IN_BLOCKS;
 	}
 	
 	

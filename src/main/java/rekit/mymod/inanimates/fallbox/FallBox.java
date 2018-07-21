@@ -1,9 +1,9 @@
-package rekit.mymod.inanimates;
+package rekit.mymod.inanimates.fallbox;
 
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.type.DynamicInanimate;
-import rekit.mymod.inanimates.states.IdleState;
+import rekit.mymod.inanimates.fallbox.states.IdleState;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
