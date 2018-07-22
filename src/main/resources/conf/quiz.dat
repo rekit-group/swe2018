@@ -1,4 +1,4 @@
-#SETTING::name->MY_DEMO_LEVEL
+#SETTING::name->The_Secret_Quiz
 #SETTING::shuffle->false
 #SETTING::doGaps->true
 #SETTING::infinite->false
